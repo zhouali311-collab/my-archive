@@ -1,225 +1,278 @@
-import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { getFeaturedExhibitions } from '../data/exhibitions'
-import { getFeaturedArticles } from '../data/journal'
-import { works } from '../data/works'
-import ExhibitionCard from '../components/ExhibitionCard'
-import JournalCard from '../components/JournalCard'
-import WorkCard from '../components/WorkCard'
+import { Link } from 'react-router-dom';
+import { exhibitions, journal, works } from '../data/mockData';
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
-
-  const featuredExhibitions = getFeaturedExhibitions()
-  const featuredArticles = getFeaturedArticles()
-  const recentWorks = works.slice(0, 3)
+  const featuredExhibitions = exhibitions.slice(0, 3);
+  const featuredWorks = works.slice(0, 6);
 
   return (
-    <div className="pt-24">
-      {/* Hero Section */}
-      <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 py-12">
-        <div className={`max-w-4xl transition-all duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-          {/* Site name */}
-          <div className="flex items-center gap-4 mb-12">
-            <div className="w-8 h-px bg-sage" />
-            <span className="text-sm tracking-widest opacity-60">my Archive</span>
-          </div>
+    <div className="min-h-screen">
+      {/* Hero Section - Magazine Cover Style */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-cream via-cream-dark to-yellow-light" />
+        
+        {/* Decorative Elements - Paper Collage Shapes */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 md:w-96 md:h-96 rounded-full bg-purple-light/30 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-72 md:h-72 rounded-full bg-yellow-mid/40 blur-2xl" />
+        <div className="absolute top-1/3 right-1/3 w-32 h-32 md:w-48 md:h-48 rounded-full bg-purple-dark/20 blur-2xl" />
+        
+        {/* Decorative Lines */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-px h-32 bg-border" />
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-px h-32 bg-border" />
 
-          {/* Main title */}
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl leading-tight text-balance">
-            "一个关于图像、身体、城市与青年表达的未完成档案。"
-          </h1>
-          
-          <p className="mt-6 text-lg md:text-xl opacity-60 italic">
-            An unfinished archive of images, motion, cities, and thoughts.
+        {/* Hero Content */}
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+          {/* Issue Number */}
+          <p className="font-sans text-xs tracking-[0.3em] text-text-muted mb-8 md:mb-12 fade-in">
+            — VOL. 01, 2024 —
           </p>
 
-          {/* Decorative elements */}
-          <div className="mt-16 flex items-center gap-8">
-            <div className="flex gap-2">
-              <span className="w-2 h-2 bg-sage rounded-full" />
-              <span className="w-2 h-2 bg-sage/50 rounded-full" />
-              <span className="w-2 h-2 bg-sage/30 rounded-full" />
-            </div>
-            <div className="flex-1 h-px bg-gradient-to-r from-sage/30 to-transparent" />
+          {/* Main Title */}
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl mb-4 md:mb-6 leading-none fade-in-delay-1">
+            my Archive
+          </h1>
+
+          {/* Subtitle / English */}
+          <p className="font-display italic text-xl md:text-2xl text-text-secondary mb-8 md:mb-12 fade-in-delay-2">
+            A Personal Exhibition Space
+          </p>
+
+          {/* Decorative Separator */}
+          <div className="flex items-center justify-center gap-4 mb-8 md:mb-12 fade-in-delay-2">
+            <span className="w-12 h-px bg-border" />
+            <span className="w-2 h-2 rounded-full bg-purple-mid" />
+            <span className="w-12 h-px bg-border" />
           </div>
 
-          {/* Scroll indicator */}
-          <div className="mt-16 flex items-center gap-3 text-xs opacity-40">
-            <span>向下滚动</span>
-            <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </div>
-        </div>
-      </section>
+          {/* Tagline */}
+          <p className="font-sans text-sm md:text-base text-text-muted tracking-wide mb-12 md:mb-16 fade-in-delay-3">
+            个人艺术档案馆 / 线上展览空间
+          </p>
 
-      {/* Entry Cards Section */}
-      <section className="px-6 md:px-12 py-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {/* Exhibitions Card */}
-            <Link 
-              to="/exhibitions"
-              className="group p-8 bg-gradient-to-br from-sage/10 to-soft-purple/10 rounded-sm card-hover"
-            >
-              <span className="text-xs tracking-widest opacity-60">01</span>
-              <h2 className="mt-4 font-serif text-2xl group-hover:text-sage transition-colors">
-                Exhibitions
-              </h2>
-              <p className="mt-2 text-sm opacity-60">展览</p>
-              <p className="mt-6 text-sm text-light-gray leading-relaxed">
-                把照片、材料、记忆和观点整理成可观看的线上展览。
-              </p>
-              <div className="mt-8 flex items-center gap-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-                <span>进入</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
-            </Link>
-
-            {/* Journal Card */}
-            <Link 
-              to="/journal"
-              className="group p-8 bg-gradient-to-br from-soft-yellow/20 to-cream-dark/30 rounded-sm card-hover"
-            >
-              <span className="text-xs tracking-widest opacity-60">02</span>
-              <h2 className="mt-4 font-serif text-2xl group-hover:text-sage transition-colors">
-                Journal
-              </h2>
-              <p className="mt-2 text-sm opacity-60">随笔</p>
-              <p className="mt-6 text-sm text-light-gray leading-relaxed">
-                记录我对校园、城市、运动、媒介与公共议题的观察。
-              </p>
-              <div className="mt-8 flex items-center gap-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-                <span>阅读</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
-            </Link>
-
-            {/* Works Card */}
-            <Link 
-              to="/works"
-              className="group p-8 bg-gradient-to-br from-cream-dark/40 to-soft-purple/10 rounded-sm card-hover"
-            >
-              <span className="text-xs tracking-widest opacity-60">03</span>
-              <h2 className="mt-4 font-serif text-2xl group-hover:text-sage transition-colors">
-                Works
-              </h2>
-              <p className="mt-2 text-sm opacity-60">作品</p>
-              <p className="mt-6 text-sm text-light-gray leading-relaxed">
-                收纳我做过的设计、策划、写作、影像与项目。
-              </p>
-              <div className="mt-8 flex items-center gap-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-                <span>查看</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Content Section */}
-      <section className="px-6 md:px-12 py-24 bg-cream-dark/20">
-        <div className="max-w-7xl mx-auto">
-          {/* Section Header */}
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-8 h-px bg-sage" />
-              <span className="text-xs tracking-widest opacity-60">精选内容</span>
-            </div>
-            <h2 className="font-serif text-3xl">Recent Highlights</h2>
-          </div>
-
-          {/* Three columns */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {/* Exhibitions */}
-            <div>
-              <h3 className="text-xs uppercase tracking-widest opacity-60 mb-6">正在展出</h3>
-              <div className="space-y-8">
-                {featuredExhibitions.slice(0, 2).map((exhibition, i) => (
-                  <ExhibitionCard key={exhibition.id} exhibition={exhibition} index={i} />
-                ))}
-              </div>
-              <Link 
-                to="/exhibitions"
-                className="mt-6 inline-flex items-center gap-2 text-sm text-sage hover:underline"
-              >
-                <span>查看全部展览</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Journal */}
-            <div>
-              <h3 className="text-xs uppercase tracking-widest opacity-60 mb-6">最近写下</h3>
-              <div className="space-y-6">
-                {featuredArticles.slice(0, 3).map((article, i) => (
-                  <JournalCard key={article.id} article={article} index={i} />
-                ))}
-              </div>
-              <Link 
-                to="/journal"
-                className="mt-6 inline-flex items-center gap-2 text-sm text-sage hover:underline"
-              >
-                <span>查看全部文章</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Works */}
-            <div>
-              <h3 className="text-xs uppercase tracking-widest opacity-60 mb-6">最近完成</h3>
-              <div className="space-y-8">
-                {recentWorks.map((work, i) => (
-                  <WorkCard key={work.id} work={work} index={i} />
-                ))}
-              </div>
-              <Link 
-                to="/works"
-                className="mt-6 inline-flex items-center gap-2 text-sm text-sage hover:underline"
-              >
-                <span>查看全部作品</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Summary Section */}
-      <section className="px-6 md:px-12 py-24">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="mb-8">
-            <span className="text-xs tracking-widest opacity-60">关于这里</span>
-          </div>
-          <blockquote className="font-serif text-xl md:text-2xl leading-relaxed">
-            "我希望这里不是一个标准化简历，而是一个能持续生长的个人空间。它记录我看见的世界、正在形成的判断，以及那些还没被完全解释清楚的经验。"
-          </blockquote>
-          <Link 
-            to="/about"
-            className="mt-12 inline-flex items-center gap-3 text-sm group"
+          {/* Enter Button - Magazine Style */}
+          <Link
+            to="/exhibitions"
+            className="inline-flex items-center gap-3 px-8 py-4 border border-border hover:bg-sage hover:border-sage hover:text-cream transition-all duration-400 fade-in-delay-3 group"
           >
-            <span className="w-8 h-px bg-sage group-hover:w-12 transition-all" />
-            <span className="group-hover:text-sage transition-colors">了解更多关于我</span>
+            <span className="font-sans text-sm tracking-wider">Enter Exhibition</span>
+            <svg
+              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-muted">
+          <span className="font-sans text-xs tracking-widest">SCROLL</span>
+          <div className="w-px h-8 bg-gradient-to-b from-border to-transparent" />
+        </div>
+      </section>
+
+      {/* Introduction Section */}
+      <section className="py-20 md:py-28 bg-cream-dark">
+        <div className="container-narrow">
+          <div className="grid md:grid-cols-12 gap-12 items-start">
+            <div className="md:col-span-4">
+              <p className="tag mb-6">About This Space</p>
+              <h2 className="font-display text-3xl md:text-4xl leading-tight">
+                一个关于影像、记忆与日常的线上档案馆
+              </h2>
+            </div>
+            <div className="md:col-span-7 md:col-start-6">
+              <p className="curatorial-note mb-6">
+                "这里收藏着我对世界的观察——街道上的光影、城市的声响、以及那些被忽略的日常瞬间。"
+              </p>
+              <p className="text-text-secondary leading-relaxed mb-6">
+                my Archive 是一个持续生长的个人创作档案。它不是简历，也不是作品集，而是一个真实的、关于创作过程和思考的记录空间。每一次展览、每一篇文章、每一个作品，都是我与这个世界对话的方式。
+              </p>
+              <Link to="/about" className="btn-ghost group">
+                <span>More About Me</span>
+                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Exhibitions */}
+      <section className="py-20 md:py-28 bg-cream">
+        <div className="container-wide">
+          {/* Section Header */}
+          <div className="flex items-end justify-between mb-12 md:mb-16 px-6 md:px-0">
+            <div>
+              <p className="exhibit-number mb-2">01</p>
+              <h2 className="font-display text-3xl md:text-4xl">Exhibitions</h2>
+            </div>
+            <Link to="/exhibitions" className="btn-ghost group hidden md:flex">
+              <span>View All</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Exhibition Cards */}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 px-6 md:px-0">
+            {featuredExhibitions.map((exhibition, index) => (
+              <Link
+                key={exhibition.id}
+                to={`/exhibitions/${exhibition.id}`}
+                className="exhibition-card group"
+              >
+                {/* Image Area */}
+                <div className="exhibition-card-image relative overflow-hidden">
+                  <div className={`absolute inset-0 ${exhibition.coverGradient || 'bg-gradient-to-br from-purple-light to-purple-mid'}`} />
+                  {/* Number Overlay */}
+                  <div className="absolute top-4 left-4">
+                    <span className="font-sans text-xs tracking-widest text-text-muted/60">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="art-card-content">
+                  <div className="art-card-meta">
+                    <span className="tag">{exhibition.category}</span>
+                    <span className="text-xs text-text-muted">{exhibition.year}</span>
+                  </div>
+                  <h3 className="art-card-title group-hover:text-sage transition-colors duration-300">
+                    {exhibition.title}
+                  </h3>
+                  <p className="art-card-description line-clamp-2">
+                    {exhibition.description}
+                  </p>
+                  {/* Exhibition Label */}
+                  <div className="mt-4 pt-4 border-t border-border-light flex items-center justify-between">
+                    <span className="card-label">View Exhibition →</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center md:hidden">
+            <Link to="/exhibitions" className="btn-secondary">
+              View All Exhibitions
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Works - Masonry Style */}
+      <section className="py-20 md:py-28 bg-cream-dark">
+        <div className="container-wide">
+          <div className="flex items-end justify-between mb-12 md:mb-16 px-6 md:px-0">
+            <div>
+              <p className="exhibit-number mb-2">02</p>
+              <h2 className="font-display text-3xl md:text-4xl">Selected Works</h2>
+            </div>
+            <Link to="/works" className="btn-ghost group hidden md:flex">
+              <span>Browse All</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Works Grid - Staggered */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 px-6 md:px-0">
+            {featuredWorks.map((work, index) => (
+              <Link
+                key={work.id}
+                to={`/works/${work.id}`}
+                className={`works-card group ${
+                  index % 3 === 1 ? 'md:mt-12' : ''
+                } ${index % 3 === 2 ? 'md:mt-6' : ''}`}
+              >
+                <div className="works-card-image relative">
+                  <div className={`absolute inset-0 ${work.gradient || 'bg-gradient-to-br from-yellow-light to-yellow-mid'}`} />
+                  {/* Number */}
+                  <div className="absolute top-3 left-3">
+                    <span className="font-sans text-xs tracking-widest text-text-muted/60">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                </div>
+                <div className="art-card-content p-4">
+                  <p className="card-label mb-1">{work.category}</p>
+                  <h3 className="font-display text-lg">{work.title}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Journal Preview */}
+      <section className="py-20 md:py-28 bg-cream">
+        <div className="container-narrow">
+          <div className="flex items-end justify-between mb-12 md:mb-16">
+            <div>
+              <p className="exhibit-number mb-2">03</p>
+              <h2 className="font-display text-3xl md:text-4xl">Journal</h2>
+            </div>
+            <Link to="/journal" className="btn-ghost group hidden md:flex">
+              <span>Read All</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Journal List */}
+          <div className="space-y-0">
+            {journal.slice(0, 3).map((article, index) => (
+              <Link
+                key={article.id}
+                to={`/journal/${article.id}`}
+                className="block py-6 border-b border-border-light group"
+              >
+                <div className="flex items-start gap-6 md:gap-12">
+                  <span className="exhibit-number mt-1 shrink-0">{String(index + 1).padStart(2, '0')}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="tag text-2xs">{article.category}</span>
+                      <span className="text-xs text-text-muted">{article.date}</span>
+                    </div>
+                    <h3 className="font-display text-xl md:text-2xl mb-2 group-hover:text-sage transition-colors duration-300">
+                      {article.title}
+                    </h3>
+                    <p className="text-sm text-text-secondary line-clamp-2">
+                      {article.excerpt}
+                    </p>
+                  </div>
+                  <svg className="w-4 h-4 text-text-muted mt-2 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Archive CTA */}
+      <section className="py-20 md:py-28 bg-gradient-to-br from-purple-light/50 via-cream-dark to-yellow-light/30">
+        <div className="container-narrow text-center">
+          <p className="exhibit-number mb-4">04</p>
+          <h2 className="font-display text-3xl md:text-4xl mb-4">Explore the Archive</h2>
+          <p className="text-text-secondary mb-8 max-w-lg mx-auto">
+            在时间线中回溯所有的创作、展览与文字记录
+          </p>
+          <Link to="/archive" className="btn-primary">
+            Enter Archive
           </Link>
         </div>
       </section>
     </div>
-  )
+  );
 }
