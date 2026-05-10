@@ -7,46 +7,77 @@ export default {
   theme: {
     extend: {
       colors: {
-        'cream': '#F7F5F0',
-        'cream-dark': '#EDE9E0',
-        'sage': '#A8B5A0',
-        'sage-light': '#C5D1BD',
-        'sage-dark': '#8A9A7E',
-        'soft-yellow': '#F5ECD7',
-        'soft-purple': '#E8E4F0',
-        'warm-gray': '#6B6B6B',
-        'light-gray': '#9A9A9A',
+        cream: {
+          DEFAULT: '#FAF6EC',
+          dark: '#F8F3E8',
+        },
+        yellow: {
+          light: '#F3E7BE',
+          DEFAULT: '#EFE3B8',
+          dark: '#EADDA6',
+        },
+        purple: {
+          light: '#E7DDF2',
+          DEFAULT: '#D8C9E8',
+          dark: '#CDB9E8',
+        },
+        text: {
+          primary: '#2F302B',
+          secondary: '#504643',
+          muted: '#8A857F',
+        },
+        sage: {
+          DEFAULT: '#6E7B62',
+          light: '#7D8A72',
+        },
+        border: {
+          DEFAULT: 'rgba(80, 70, 55, 0.15)',
+          light: 'rgba(80, 70, 55, 0.08)',
+        },
       },
       fontFamily: {
-        'serif': ['Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-        'sans': ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['Cormorant Garamond', 'serif'],
+        sans: ['DM Sans', 'sans-serif'],
+        body: ['Karla', 'sans-serif'],
+      },
+      fontSize: {
+        '2xs': '0.65rem',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '100': '25rem',
+        '120': '30rem',
+      },
+      maxWidth: {
+        '5xl': '70rem',
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease-out forwards',
-        'slide-up': 'slideUp 0.8s ease-out forwards',
-        'grain': 'grain 8s steps(10) infinite',
+        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        slideUp: {
+        fadeInUp: {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        grain: {
-          '0%, 100%': { transform: 'translate(0, 0)' },
-          '10%': { transform: 'translate(-5%, -10%)' },
-          '20%': { transform: 'translate(-15%, 5%)' },
-          '30%': { transform: 'translate(7%, -25%)' },
-          '40%': { transform: 'translate(-5%, 25%)' },
-          '50%': { transform: 'translate(-15%, 10%)' },
-          '60%': { transform: 'translate(15%, 0%)' },
-          '70%': { transform: 'translate(0%, 15%)' },
-          '80%': { transform: 'translate(3%, 35%)' },
-          '90%': { transform: 'translate(-10%, 10%)' },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
+      },
+      transitionDuration: {
+        '400': '400ms',
+        '600': '600ms',
+        '800': '800ms',
+      },
+      backdropBlur: {
+        xs: '2px',
       },
     },
   },
