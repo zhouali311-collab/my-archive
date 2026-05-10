@@ -1,15 +1,17 @@
 const exhibitions = [];
+const journal = [];
 const journalPosts = [];
 const works = [];
 
-// 中文别名，兼容现有页面里的中文 import
+// 兼容中文变量名
 const 展览 = exhibitions;
-const 期刊 = journalPosts;
+const 期刊 = journal;
 const 作品 = works;
-const 文章 = journalPosts;
+const 文章 = journal;
 
 export {
   exhibitions,
+  journal,
   journalPosts,
   works,
   展览,
@@ -20,6 +22,7 @@ export {
 
 export default {
   exhibitions,
+  journal,
   journalPosts,
   works,
   展览,
