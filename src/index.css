@@ -1,94 +1,396 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Karla:wght@300;400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================
+   Custom Design System - my Archive
+   ======================================== */
+
 @layer base {
+  :root {
+    /* Color Palette */
+    --color-cream: #FAF6EC;
+    --color-cream-dark: #F8F3E8;
+    --color-yellow-light: #F3E7BE;
+    --color-yellow-mid: #EFE3B8;
+    --color-yellow-dark: #EADDA6;
+    --color-purple-light: #E7DDF2;
+    --color-purple-mid: #D8C9E8;
+    --color-purple-dark: #CDB9E8;
+    --color-text-primary: #2F302B;
+    --color-text-secondary: #504643;
+    --color-text-muted: #8A857F;
+    --color-gray-green: #6E7B62;
+    --color-gray-green-light: #7D8A72;
+    --color-border: rgba(80, 70, 55, 0.15);
+    --color-border-light: rgba(80, 70, 55, 0.08);
+  }
+
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
-    @apply bg-cream text-warm-gray antialiased;
-    font-feature-settings: 'liga' 1, 'kern' 1;
-  }
-
-  ::selection {
-    @apply bg-sage/30;
-  }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-cream-dark;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-sage/50 rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-sage;
+    font-family: 'Karla', sans-serif;
+    background-color: var(--color-cream);
+    color: var(--color-text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
+
+/* ========================================
+   Grain/Noise Texture Overlay
+   ======================================== */
+
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+@supports not selector(::before) {
+  .grain-overlay {
+    display: none;
+  }
+}
+
+/* ========================================
+   Typography System
+   ======================================== */
 
 @layer components {
-  .grain-overlay {
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    right: -50%;
-    bottom: -50%;
-    width: 200%;
-    height: 200%;
-    background: transparent url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E") repeat;
-    pointer-events: none;
-    opacity: 0.03;
-    animation: grain 8s steps(10) infinite;
-    z-index: 9999;
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
   }
 
-  .text-balance {
-    text-wrap: balance;
+  .font-body {
+    font-family: 'Karla', sans-serif;
+    font-weight: 400;
   }
 
-  .card-hover {
-    @apply transition-all duration-500 ease-out;
+  .font-sans {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
   }
 
-  .card-hover:hover {
-    @apply -translate-y-1;
+  /* Exhibition Label / Tag Style */
+  .tag {
+    @apply inline-block px-3 py-1 text-xs font-sans tracking-wider uppercase;
+    background-color: var(--color-purple-light);
+    color: var(--color-text-secondary);
   }
 
-  .page-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+  .tag-yellow {
+    background-color: var(--color-yellow-light);
   }
 
-  .line-decoration {
-    @apply relative;
+  .tag-outline {
+    @apply border;
+    border-color: var(--color-border);
+    background-color: transparent;
   }
 
-  .line-decoration::after {
-    content: '';
-    @apply absolute bottom-0 left-0 w-full h-px bg-sage/30;
+  /* Exhibit Number */
+  .exhibit-number {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  /* Curatorial Note */
+  .curatorial-note {
+    @apply font-serif italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+  }
+
+  /* Card Label - 展签风格 */
+  .card-label {
+    font-family: 'Karla', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* Divider Lines */
+  .fine-line {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-border) 20%,
+      var(--color-border) 80%,
+      transparent
+    );
+  }
+
+  .fine-line-vertical {
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-border) 20%,
+      var(--color-border) 80%,
+      transparent
+    );
   }
 }
 
+/* ========================================
+   Card Styles
+   ======================================== */
+
+@layer components {
+  .art-card {
+    @apply relative overflow-hidden transition-all duration-500;
+    background-color: var(--color-cream);
+    border: 1px solid var(--color-border);
+  }
+
+  .art-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border);
+  }
+
+  .art-card-image {
+    @apply w-full overflow-hidden;
+    background-color: var(--color-purple-light);
+  }
+
+  .art-card-image img {
+    @apply w-full h-full object-cover transition-transform duration-700;
+  }
+
+  .art-card:hover .art-card-image img {
+    transform: scale(1.03);
+  }
+
+  .art-card-content {
+    @apply p-5;
+  }
+
+  .art-card-meta {
+    @apply flex items-center gap-3 mb-3;
+  }
+
+  .art-card-title {
+    @apply font-display text-xl mb-2;
+    color: var(--color-text-primary);
+  }
+
+  .art-card-description {
+    @apply text-sm leading-relaxed;
+    color: var(--color-text-secondary);
+  }
+
+  /* Exhibition Card Variant */
+  .exhibition-card {
+    @apply art-card;
+  }
+
+  .exhibition-card-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Journal Card Variant */
+  .journal-card {
+    @apply art-card border-l-2;
+    border-left-color: var(--color-purple-mid);
+  }
+
+  .journal-card:hover {
+    border-left-color: var(--color-purple-dark);
+  }
+
+  /* Works Card Variant */
+  .works-card {
+    @apply art-card;
+  }
+
+  .works-card-image {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* ========================================
+   Button Styles
+   ======================================== */
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 text-sm font-sans tracking-wider;
+    background-color: var(--color-text-primary);
+    color: var(--color-cream);
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-gray-green);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 text-sm font-sans tracking-wider border;
+    border-color: var(--color-border);
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-purple-light);
+    border-color: transparent;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 text-sm font-sans tracking-wider;
+    color: var(--color-text-muted);
+    transition: color 0.3s ease;
+  }
+
+  .btn-ghost:hover {
+    color: var(--color-text-primary);
+  }
+}
+
+/* ========================================
+   Animation Classes
+   ======================================== */
+
+@layer components {
+  .fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .fade-in-delay-1 {
+    animation: fadeInUp 0.8s ease-out 0.15s forwards;
+    opacity: 0;
+  }
+
+  .fade-in-delay-2 {
+    animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  .fade-in-delay-3 {
+    animation: fadeInUp 0.8s ease-out 0.45s forwards;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   Layout Utilities
+   ======================================== */
+
+@layer components {
+  .page-container {
+    @apply min-h-screen;
+    padding-top: 5rem;
+  }
+
+  .section-spacing {
+    @apply py-20 md:py-28;
+  }
+
+  .container-narrow {
+    @apply max-w-5xl mx-auto px-6 md:px-8;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-6 md:px-8;
+  }
+}
+
+/* ========================================
+   Form Elements (if needed)
+   ======================================== */
+
+@layer components {
+  .art-input {
+    @apply w-full px-4 py-3 text-sm font-body bg-transparent border-b;
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+    transition: border-color 0.3s ease;
+  }
+
+  .art-input:focus {
+    outline: none;
+    border-color: var(--color-gray-green);
+  }
+
+  .art-input::placeholder {
+    color: var(--color-text-muted);
+  }
+}
+
+/* ========================================
+   Scrollbar Styling
+   ======================================== */
+
 @layer utilities {
-  .animate-delay-100 {
-    animation-delay: 100ms;
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
-  .animate-delay-200 {
-    animation-delay: 200ms;
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  .animate-delay-300 {
-    animation-delay: 300ms;
-  }
-  .animate-delay-400 {
-    animation-delay: 400ms;
-  }
-  .animate-delay-500 {
-    animation-delay: 500ms;
-  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
 }
